@@ -1,0 +1,17 @@
+E:\User\Desktop\KeyNet\KeyNetServer\KeyNetServer\bin\Debug\KeyNetServer.exe.config
+E:\User\Desktop\KeyNet\KeyNetServer\KeyNetServer\bin\Debug\KeyNetServer.exe
+E:\User\Desktop\KeyNet\KeyNetServer\KeyNetServer\bin\Debug\KeyNetServer.pdb
+E:\User\Desktop\KeyNet\KeyNetServer\KeyNetServer\obj\Debug\KeyNetServer.csprojAssemblyReference.cache
+E:\User\Desktop\KeyNet\KeyNetServer\KeyNetServer\obj\Debug\KeyNetServer.csproj.CoreCompileInputs.cache
+E:\User\Desktop\KeyNet\KeyNetServer\KeyNetServer\obj\Debug\KeyNetServer.exe
+E:\User\Desktop\KeyNet\KeyNetServer\KeyNetServer\obj\Debug\KeyNetServer.pdb
+D:\KeyNet\KeyNetServer\KeyNetServer\bin\Debug\KeyNetServer.exe.config
+D:\KeyNet\KeyNetServer\KeyNetServer\bin\Debug\KeyNetServer.exe
+D:\KeyNet\KeyNetServer\KeyNetServer\bin\Debug\KeyNetServer.pdb
+D:\KeyNet\KeyNetServer\KeyNetServer\bin\Debug\System.Data.SQLite.dll
+D:\KeyNet\KeyNetServer\KeyNetServer\bin\Debug\System.Data.SQLite.xml
+D:\KeyNet\KeyNetServer\KeyNetServer\obj\Debug\KeyNetServer.csprojAssemblyReference.cache
+D:\KeyNet\KeyNetServer\KeyNetServer\obj\Debug\KeyNetServer.csproj.CoreCompileInputs.cache
+D:\KeyNet\KeyNetServer\KeyNetServer\obj\Debug\KeyNetServer.csproj.CopyComplete
+D:\KeyNet\KeyNetServer\KeyNetServer\obj\Debug\KeyNetServer.exe
+D:\KeyNet\KeyNetServer\KeyNetServer\obj\Debug\KeyNetServer.pdb
