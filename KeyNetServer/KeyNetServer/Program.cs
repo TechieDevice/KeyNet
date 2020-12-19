@@ -21,32 +21,7 @@ namespace KeyNetServer
             {
                 Crypto.RsaKeyGen();
                 //DB.Connect();
-                Crypto.DsaGen();
-
-                BigInteger p = Crypto.DSAdata[0];
-                BigInteger q = Crypto.DSAdata[1];
-                BigInteger g = Crypto.DSAdata[2];
-                BigInteger j = Crypto.FindInverse(g,p);
-                BigInteger w = Crypto.DSAdata[4];
-                BigInteger y1 = BigInteger.ModPow(g,w,p);
-                BigInteger y2 = BigInteger.ModPow(j,w,p);
-                BigInteger r = 274;
-                    BigInteger x = BigInteger.ModPow(g,r,p);
-                BigInteger e = 129;
-                BigInteger s = (r+w*e)%q;
-                    BigInteger z1 = (BigInteger.ModPow(g,s,p)*BigInteger.ModPow(y1,e,p))%p;
-                    BigInteger z2 = (BigInteger.ModPow(g,s,p)*BigInteger.ModPow(y2,e,p))%p;
-
-
-                //BigInteger w = BigInteger.ModPow(Crypto.DSAdata[2], Crypto.DSAdata[0] - Crypto.DSAdata[4], Crypto.DSAdata[0]);
-                //Console.WriteLine(w);
-                Console.WriteLine(x);
-                Console.WriteLine();
-                Console.WriteLine(y1);
-                Console.WriteLine(y2);
-                Console.WriteLine();
-                Console.WriteLine(z1);
-                Console.WriteLine(z2);
+               
 
                 server = new ServerObject();
                 listenThread = new Thread(new ThreadStart(server.Listen));
