@@ -354,9 +354,61 @@ namespace KeyNetClient
                             {
                                 this.BeginInvoke((MethodInvoker)delegate ()
                                 {
-                                    byte[] byteKey = Crypto.AesKeyPartGen();
                                     string target = Encoding.Unicode.GetString(message).Substring(3, Convert.ToInt32(Encoding.Unicode.GetString(message).Substring(2, 1)));                                   
                                     keyBox.Text = Encoding.Unicode.GetString(message).Substring(3 + target.Length);
+                                });
+                                break;
+                            }
+                        case "ts": //time mark send
+                            {
+                                this.BeginInvoke((MethodInvoker)delegate ()
+                                {
+                                    string target = Encoding.Unicode.GetString(message).Substring(3, Convert.ToInt32(Encoding.Unicode.GetString(message).Substring(2, 1)));
+                                    string mark = Encoding.Unicode.GetString(message).Substring(5 + target.Length, Convert.ToInt32(Encoding.Unicode.GetString(message).Substring(3 + target.Length, 2)));
+                                    DateTime date = new DateTime(1, 1, 1, 0, 0, 00);
+                                    DateTime now = DateTime.Now;
+                                    TimeSpan interval = now - date;
+                                    string timeMark = Convert.ToInt32(interval.TotalMinutes).ToString();
+                                    if (timeMark == mark)
+                                    {
+                                        byte[] key = Encoding.Unicode.GetBytes(Encoding.Unicode.GetString(message).Substring(4 + target.Length + mark.Length));
+                                        byte[] byteUnicode = new byte[128];
+                                        for (int i = 0; i < 128; i++)
+                                        {
+                                            byteUnicode[i] = message[10 + target.Length * 2 + mark.Length * 2 + i];
+                                        }
+                                        string base64Key = Encoding.Unicode.GetString(byteUnicode);
+                                        byte[] byteKey = Convert.FromBase64String(base64Key);
+                                        users.Find(x => x.userName == target).key = byteKey;
+                                        if (activeChat != null)
+                                        {
+                                            if (users.Find(x => x.userName == target).messageTextBox == activeChat)
+                                            {
+                                                keyBox.Text = Encoding.Unicode.GetString(users.Find(x => x.userName == target).key);
+                                                //keyButton.Enabled = false;
+                                                sendButton.Enabled = true;
+                                            }
+                                        }
+                                        byte[] data = Encoding.Unicode.GetBytes("of" + usersBox.SelectedItem.ToString().Length + usersBox.SelectedItem.ToString()).ToArray();
+                                        stream.Write(data, 0, data.Length);
+                                    }
+                                });
+                                break;
+                            }
+                        case "of": //ok or fail
+                            {
+                                this.BeginInvoke((MethodInvoker)delegate ()
+                                {
+                                    string target = Encoding.Unicode.GetString(message).Substring(3, Convert.ToInt32(Encoding.Unicode.GetString(message).Substring(2, 1)));
+                                    if (activeChat != null)
+                                    {
+                                        if (users.Find(x => x.userName == target).messageTextBox == activeChat)
+                                        {
+                                            keyBox.Text = Encoding.Unicode.GetString(users.Find(x => x.userName == target).key);
+                                            //keyButton.Enabled = false;
+                                            sendButton.Enabled = true;
+                                        }
+                                    }
                                 });
                                 break;
                             }
@@ -443,7 +495,24 @@ namespace KeyNetClient
                 else if (keyType == 1)
                 //if (Encoding.Unicode.GetString(users.Find(x => x.userName == usersBox.SelectedItem.ToString()).key) == "")
                 {
+                    byte[] key = Crypto.AesKeyGen();
+                    string base64Key = Convert.ToBase64String(key);
+                    byte[] keyUnicode = Encoding.Unicode.GetBytes(base64Key);
+                    users.Find(x => x.userName == usersBox.SelectedItem.ToString()).key = key;
+                    
 
+                    DateTime date = new DateTime(1, 1, 1, 0, 0, 00);
+                    DateTime now = DateTime.Now;
+                    TimeSpan interval = now - date;
+                    string timeMark = Convert.ToInt32(interval.TotalMinutes).ToString();
+
+                    byte[] dataSend = Encoding.Unicode.GetBytes(
+                        "ts" + usersBox.SelectedItem.ToString().Length + 
+                        usersBox.SelectedItem.ToString() + 
+                        timeMark.Length + 
+                        timeMark).Concat(
+                        keyUnicode).ToArray();
+                    stream.Write(dataSend, 0, dataSend.Length);
                 }
                 else if (keyType == 2)
                 //if (Encoding.Unicode.GetString(users.Find(x => x.userName == usersBox.SelectedItem.ToString()).key) == "")

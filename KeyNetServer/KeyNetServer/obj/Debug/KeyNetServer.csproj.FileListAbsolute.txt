@@ -15,3 +15,12 @@ D:\KeyNet\KeyNetServer\KeyNetServer\obj\Debug\KeyNetServer.csproj.CoreCompileInp
 D:\KeyNet\KeyNetServer\KeyNetServer\obj\Debug\KeyNetServer.csproj.CopyComplete
 D:\KeyNet\KeyNetServer\KeyNetServer\obj\Debug\KeyNetServer.exe
 D:\KeyNet\KeyNetServer\KeyNetServer\obj\Debug\KeyNetServer.pdb
+D:\KeyNet\KeyNet\KeyNetServer\KeyNetServer\bin\Debug\KeyNetServer.exe.config
+D:\KeyNet\KeyNet\KeyNetServer\KeyNetServer\bin\Debug\KeyNetServer.exe
+D:\KeyNet\KeyNet\KeyNetServer\KeyNetServer\bin\Debug\KeyNetServer.pdb
+D:\KeyNet\KeyNet\KeyNetServer\KeyNetServer\bin\Debug\System.Data.SQLite.dll
+D:\KeyNet\KeyNet\KeyNetServer\KeyNetServer\bin\Debug\System.Data.SQLite.xml
+D:\KeyNet\KeyNet\KeyNetServer\KeyNetServer\obj\Debug\KeyNetServer.csproj.CoreCompileInputs.cache
+D:\KeyNet\KeyNet\KeyNetServer\KeyNetServer\obj\Debug\KeyNetServer.csproj.CopyComplete
+D:\KeyNet\KeyNet\KeyNetServer\KeyNetServer\obj\Debug\KeyNetServer.exe
+D:\KeyNet\KeyNet\KeyNetServer\KeyNetServer\obj\Debug\KeyNetServer.pdb

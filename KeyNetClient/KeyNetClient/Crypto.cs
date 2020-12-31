@@ -146,6 +146,21 @@ namespace KeyNetClient
             return provider.VerifyData(data, SHA1.Create(), sign);
         }
 
+        public static byte[] AesKeyGen()
+        {
+            Aes aes = Aes.Create();
+            aes.KeySize = 256;
+            aes.GenerateKey();
+
+            byte[] IV = new byte[16];
+            for (int i = 0; i < 16; i++)
+            {
+                IV[i] = aes.IV[i];
+            }
+
+            return aes.Key.Concat(IV).ToArray();
+        }
+
         public static byte[] AesKeyPartGen()
         {
             Aes aes = Aes.Create();

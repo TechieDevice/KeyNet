@@ -194,7 +194,7 @@ namespace KeyNetServer
                                         keyPart[i] = message[6 + targetUser.Length * 2 + i];
                                     }
                                     byte[] mes = Encoding.Unicode.GetBytes($"pc{this.userName.Length}{this.userName}").Concat(keyPart).ToArray();
-                                    Console.WriteLine($"Server send public {targetUser}'s key for {this.userName}");
+                                    Console.WriteLine($"Сервер отправил закрытую часть ключа {this.userName} для {targetUser}");
                                     server.SendMessage(mes, targetUser, 2);
                                     break;
                                 }
@@ -208,6 +208,7 @@ namespace KeyNetServer
                                     }
                                     string key = this.key;
                                     byte[] mes = (Encoding.Unicode.GetBytes($"kp{this.userName.Length}{this.userName}").Concat(keyPart).ToArray()).Concat(Encoding.Unicode.GetBytes(this.key)).ToArray();
+                                    Console.WriteLine($"Сервер отправил закрытую часть ключа {this.userName} для {targetUser}");
                                     server.SendMessage(mes, targetUser, 2);
                                     break;
                                 }
@@ -248,6 +249,43 @@ namespace KeyNetServer
                                     byte[] ok = Encoding.Unicode.GetBytes(encMessage.Substring(3 + targetUser.Length));
                                     Console.WriteLine($"Сервер отправил ответ {this.userName} для {targetUser}. Ответ: [{Encoding.Unicode.GetString(ok)}]");
                                     server.SendMessage(Encoding.Unicode.GetBytes($"ok{this.userName.Length}{this.userName}").Concat(ok).ToArray(), targetUser, 2);
+                                    break;
+                                }
+                            case "ts": //time mark send
+                                {
+                                    string targetUser = encMessage.Substring(3, Convert.ToInt32(encMessage.Substring(2, 1)));
+                                    string mark = encMessage.Substring(5 + targetUser.Length, Convert.ToInt32(encMessage.Substring(3 + targetUser.Length, 2)));
+                                    DateTime date = new DateTime(1, 1, 1, 0, 0, 00);
+                                    DateTime now = DateTime.Now;
+                                    TimeSpan interval = now - date;
+                                    string timeMark = Convert.ToInt32(interval.TotalMinutes).ToString();
+                                    if (timeMark != mark)
+                                    {
+                                        Console.WriteLine($"Мета времени {this.userName} для {targetUser} не совпала.");
+                                        server.SendMessage(Encoding.Unicode.GetBytes($"er{this.userName.Length}{this.userName}"), this.userName, 2);
+                                        break;
+                                    }
+                                    byte[] key = new byte[128];
+                                    for (int i = 0; i < 128; i++)
+                                    {
+                                        key[i] = message[10 + targetUser.Length * 2 + mark.Length * 2 + i];
+                                    }
+
+                                    Console.WriteLine($"Мета времени {this.userName} для {targetUser} совпала. Сервер отправил ключ.");
+                                    byte[] dataSend = Encoding.Unicode.GetBytes(
+                                        "ts" + this.userName.Length +
+                                        this.userName +
+                                        timeMark.Length +
+                                        timeMark).Concat(
+                                        key).ToArray();            
+                                    server.SendMessage(dataSend, targetUser, 2);
+                                    break;
+                                }
+                            case "of": //ok
+                                {
+                                    string targetUser = encMessage.Substring(3, Convert.ToInt32(encMessage.Substring(2, 1)));
+                                    Console.WriteLine($"Сервер отправил положительный ответ {this.userName} для {targetUser}.");
+                                    server.SendMessage(Encoding.Unicode.GetBytes($"of{this.userName.Length}{this.userName}"), targetUser, 2);
                                     break;
                                 }
                         }
